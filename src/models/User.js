@@ -3,15 +3,15 @@ const User = new Schema(
   {
     username: {
       type: String,
-      allowNull: true,
+      allowNull: false,
     },
     name: {
       type: String,
-      allowNull: true,
+      allowNull: false,
     },
     password: {
       type: String,
-      allowNull: true,
+      allowNull: false,
     },
   },
   {
@@ -21,4 +21,13 @@ const User = new Schema(
 
 const user = model("User", User);
 
-export {user}
+export { user };
+
+//Functions
+
+export async function createUser(body) {
+  const users = new user(body);
+  await users.save();
+
+  return users
+}

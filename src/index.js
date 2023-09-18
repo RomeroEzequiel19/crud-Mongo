@@ -1,27 +1,20 @@
 import express from "express";
+import "dotenv/config";
 import { conectarDB } from "./database.js";
-import { user } from "./models/User.js";
+
+
+import { userRouter } from "./routes/user.routes.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hola");
-});
+app.use(express.json());
 
-app.post('/register', async (req, res) => {
-    try {
-        const users = new  user (req.body);
-
-        await users.save();
-
-        return res.json({message: "Registro Exitoso"})
-    } catch (error) {
-        console.log("Error: " + error)
-    }
-})
+app.use(userRouter)
 
 app.listen(
   3000,
-  () => {console.log("Servidor correindo en la oerieto 300")},
+  () => {
+    console.log("Servidor correindo en la oerieto 300");
+  },
   conectarDB()
 );
